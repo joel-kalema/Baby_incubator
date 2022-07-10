@@ -44,7 +44,7 @@ nav {
 .page_description {
   margin-top: 1rem;
   padding: 15px 10px;
-  background-color: rgb(0, 172, 0);
+  background-color: rgb(0, 197, 0);
   color: #fff;
   border-radius: 1rem;
   -webkit-border-radius: 1rem;
@@ -57,7 +57,7 @@ nav {
   padding: 20px;
 }
 
-.datas_container h3 {
+.datas_container h2 {
   margin: 1rem 0;
   color: orangered;
 }
@@ -67,5 +67,35 @@ nav {
   margin-top: 10px;
   height: 10rem;
   background-color: #fff;
+  padding: 1rem 2rem;
+}
+
+.icon {
+  font-size: 3rem;
+}
+
+.temperature {
+  color: firebrick;
+}
+
+.heart {
+  color: orangered;
+}
+
+.weight {
+  color: rgb(0, 197, 0);
+}
+
+.humidity {
+  color: rgb(71, 71, 255);
+}
+
+.data_content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.data_content p {
+  font-size: 3rem;
 }
 

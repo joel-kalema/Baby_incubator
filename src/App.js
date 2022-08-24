@@ -7,6 +7,10 @@ import Login from './login';
 
 function App() {
   const [health, sethealth] = useState([])
+  const [rangeval, setRangeval] = useState('00');
+
+  const App = firebaseApp
+  const db = getDatabase(App)
 
   useEffect(() => {
     onValue(ref(db), snapshot => {
@@ -18,9 +22,6 @@ function App() {
       }
     })
   }, [])
-
-  const App = firebaseApp
-  const db = getDatabase(App)
 
   return (
     <div className="App">
@@ -55,13 +56,10 @@ function App() {
                 </div>
               </div>
               <input
-                type="range"
-                id="vol"
-                name="vol"
-                min="0"
-                max="50"
-                className="slider"
+                type="range" className="custom-range" min="15" max="37" 
+                onChange={(event) => setRangeval(event.target.value)}
               />
+              <p>The range value is {rangeval}</p> 
             </div>
           </div>
           <div className="datas">

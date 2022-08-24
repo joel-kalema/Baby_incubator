@@ -10,7 +10,7 @@ import {
 
 const Login = () => {
 
-    const [login, setLog] = useState([]);
+    const [login, setLog] = useState({});
 
     
   const db = getFirestore(firebaseApp)
@@ -30,7 +30,7 @@ const Login = () => {
   
     return(
         <>
-            <h1>{console.log(login.key)}</h1>
+            <h1>{console.log(login)}</h1>
         </>
     );
 }

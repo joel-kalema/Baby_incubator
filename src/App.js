@@ -1,15 +1,9 @@
 import './App.css';
-import { uid } from 'uid';
+import { firebaseApp } from './firebaseData/database'
 import { getDatabase,ref, onValue} from 'firebase/database'
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  snapshot
-} from "firebase/firestore";
 import { useEffect, useState } from 'react';
-import { initializeApp } from 'firebase/app';
-import userEvent from '@testing-library/user-event';
+import Login from './login';
+
 
 function App() {
   const [health, sethealth] = useState([])
@@ -24,33 +18,14 @@ function App() {
       }
     })
   }, [])
-  const firebaseApp = initializeApp({
-    apiKey: "AIzaSyD-s6tdjiEsAY8_9vsSR5b0C8SCp8sP-Dg",
-    authDomain: "incubator-792ad.firebaseapp.com",
-    databaseURL: "https://incubator-792ad-default-rtdb.firebaseio.com",
-    projectId: "incubator-792ad",
-    storageBucket: "incubator-792ad.appspot.com",
-    messagingSenderId: "544622898492",
-    appId: "1:544622898492:web:cb3ab1c97360065f6d8239"
-  });
 
   const App = firebaseApp
   const db = getDatabase(App)
 
-  // const db = getFirestore(firebaseApp)
-  // const colRef = collection(db, 'health')
-  
-  // const data = onSnapshot(colRef, (onSnapshot) => {
-  //   const health = []
-  //   onSnapshot.docs.forEach((doc) => {
-  //   health.push({...doc.data(), id: doc.id })
-  //   })
-  //   console.log(health)
-  // })
-
   return (
     <div className="App">
       <main>
+        <Login />
       <section className="home_page">
         <header>
           <h3>Logo</h3>

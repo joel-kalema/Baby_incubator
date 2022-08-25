@@ -10,7 +10,7 @@ import {
 
 const Login = () => {
 
-    const [login, setLog] = useState({});
+    const [key, setKey] = useState();
 
     
   const db = getFirestore(firebaseApp)
@@ -21,7 +21,7 @@ const Login = () => {
     console.log(snapshot.docs)
     let login = []
     snapshot.docs.map((log) => {
-       setLog( login.push({...log.data(), id: log.id}))
+       setKey(login.push({...log.data(), id: log.id}))
     })
     console.log(login)
   }).catch(error => {
@@ -30,7 +30,7 @@ const Login = () => {
   
     return(
         <>
-            <h1>{console.log(login)}</h1>
+            <h1>{console.log(key)}</h1>
         </>
     );
 }

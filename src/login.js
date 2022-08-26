@@ -39,13 +39,14 @@ function Login() {
     if (userData) {
       if (userData.password !== pass.value) {
         // Invalid password
-        setErrorMessages({ name: "pass", message: errors.pass });
+        setErrorMessages({ name: "key", message: errors.pass });
       } else {
         setIsSubmitted(true);
       }
     } else {
       // Username not found
       setErrorMessages({ name: "uname", message: errors.uname });
+      setIsSubmitted(false);
     }
   };
 
@@ -59,16 +60,13 @@ function Login() {
   const renderForm = (
     <div className="form">
       <form onSubmit={handleSubmit}>
-        <div className="input-container">
+      <h1>Connect</h1>
           <label>Username </label>
           <input type="text" name="uname" required />
           {renderErrorMessage("uname")}
-        </div>
-        <div className="input-container">
-          <label>Password </label>
+          <label>Key</label>
           <input type="password" name="pass" required />
           {renderErrorMessage("pass")}
-        </div>
         <div className="button-container">
           <input type="submit" />
         </div>
@@ -76,14 +74,29 @@ function Login() {
     </div>
   );
 
-  console.log(database[1].username === "docteur")
+  const condition = () => {
+    if(isSubmitted === true) {
+      if(database[0].username === "docteur") {
+        return (<Docteur />)
+      } else {
+        return (<Parent />)
+      }
+      
+    }
+    else{
+      console.log(isSubmitted)
+      return renderForm
+    }
+  }
 
   return (
     <div className="app">
       <div className="login-form">
-        { isSubmitted && database[0].username === "docteur" ? <Docteur />
+        {condition()}
+
+        {/* { isSubmitted && database[0].username === "docteur" ? <Docteur />
          :isSubmitted && database[1].username === "parent" ? <Parent />
-         :renderForm }
+         :renderForm } */}
       </div>
     </div>
   );

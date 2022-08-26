@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import ReactDOM from "react-dom";
-import Main from "./main";
+import Docteur from "./main";
+import Parent from "./parent";
+import './App.css';
 
 
 function Login() {
@@ -11,11 +12,11 @@ function Login() {
   // User Login info
   const database = [
     {
-      username: "user1",
+      username: "docteur",
       password: "pass1"
     },
     {
-      username: "user2",
+      username: "parent",
       password: "pass2"
     }
   ];
@@ -75,10 +76,14 @@ function Login() {
     </div>
   );
 
+  console.log(database[1].username === "docteur")
+
   return (
     <div className="app">
       <div className="login-form">
-        {isSubmitted ? <Main /> : renderForm}
+        { isSubmitted && database[0].username === "docteur" ? <Docteur />
+         :isSubmitted && database[1].username === "parent" ? <Parent />
+         :renderForm }
       </div>
     </div>
   );

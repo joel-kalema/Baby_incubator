@@ -93,10 +93,6 @@ function Login() {
     <div className="app">
       <div className="login-form">
         {condition()}
-
-        {/* { isSubmitted && database[0].username === "docteur" ? <Docteur />
-         :isSubmitted && database[1].username === "parent" ? <Parent />
-         :renderForm } */}
       </div>
     </div>
   );

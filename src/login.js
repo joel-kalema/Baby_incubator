@@ -75,7 +75,7 @@ function Login() {
   );
 
   const condition = () => {
-    if(isSubmitted === true) {
+    if(isSubmitted) {
       if(database[0].username === "docteur") {
         return (<Docteur />)
       } else {

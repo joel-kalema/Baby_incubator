@@ -18,12 +18,15 @@ function Docteur() {
     onValue(ref(db), snapshot => {
       const data = snapshot.val();
       if (data !== null) {
-        Object.values(data).map((hth) => {
-          sethealth(health => [...health, hth])
-        })
+        sethealth(Object.values(data)[0])
+        // Object.values(data).map((hth) => {
+        //   sethealth(health => [...health, hth])
+        // })
       }
     })
   }, [])
+
+  console.log(health)
 
 
     // const [key, setKey] = useState();
@@ -71,7 +74,8 @@ function Docteur() {
                   <FaTemperatureLow />
                 </div>
                 <div>
-                {health.slice(-1).map(ht => <p>{ht}°C/</p>)}<h6>max:{rangeval} °C</h6>
+                  <p>{health.temperature}°C</p>
+                  <h6>max:{health.level} °C</h6>
                 </div>
               </div>
               <input
@@ -87,7 +91,7 @@ function Docteur() {
                 <FaHeartbeat />
               </div>
               <div>
-              {health.slice(0, 1).map(ht => <p>{ht}</p>)}
+              <p>{health.heartPulse}</p>
               </div>
             </div>
           </div>
@@ -98,7 +102,7 @@ function Docteur() {
                 <FaBalanceScaleLeft />
               </div>
               <div>
-              {health.slice(1, 2).map(ht => <p>{ht}kg</p>)}
+              <p>{health.height}/kg</p>
               </div>
             </div>
           </div>
@@ -109,7 +113,7 @@ function Docteur() {
                 <WiHumidity />
               </div>
               <div>
-              {health.slice(-2, -1).map(ht => <p>{ht}%</p>)}
+                <p>{health.humidity}</p>
               <span>/50%</span>
               </div>
             </div>

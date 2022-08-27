@@ -1,6 +1,6 @@
 import './App.css';
 import { firebaseApp } from './firebaseData/database'
-import { getDatabase,ref, onValue} from 'firebase/database'
+import { getDatabase,ref, onValue, set} from 'firebase/database'
 import { useEffect, useState } from 'react';
 import { FaTemperatureLow, FaHeartbeat, FaBalanceScaleLeft } from 'react-icons/fa';
 import { GiHamburgerMenu } from 'react-icons/gi';
@@ -10,6 +10,7 @@ import { WiHumidity } from 'react-icons/wi';
 function Docteur() {
   const [health, sethealth] = useState([])
   const [rangeval, setRangeval] = useState('00');
+  const [diplayLevel, setDiplayLevel] = useState('00')
 
   const App = firebaseApp
   const db = getDatabase(App)
@@ -18,33 +19,19 @@ function Docteur() {
     onValue(ref(db), snapshot => {
       const data = snapshot.val();
       if (data !== null) {
-        sethealth(Object.values(data)[0])
-        // Object.values(data).map((hth) => {
-        //   sethealth(health => [...health, hth])
-        // })
+        setDiplayLevel(Object.values(data)[0])
+        sethealth(Object.values(data)[1])
       }
     })
   }, [])
 
+  const setRange = () => {
+    set(ref(db, 'doctorSet', 'level'), {
+      level: rangeval,
+    });
+  }
+
   console.log(health)
-
-
-    // const [key, setKey] = useState();
-    
-  // const db = getFirestore(firebaseApp)
-  // const colRef = collection(db, 'health')
-
-  // getDocs(colRef)
-  // .then((snapshot) => {
-  //   console.log(snapshot.docs)
-  //   let login = []
-  //   snapshot.docs.map((log) => {
-  //      setKey(login.push(log.data()))
-  //   })
-  //   console.log(login)
-  // }).catch(error => {
-  //   console.log(error)
-  // })
 
   return (
     <div className="App">
@@ -75,13 +62,12 @@ function Docteur() {
                 </div>
                 <div>
                   <p>{health.temperature}°C</p>
-                  <h6>max:{health.level} °C</h6>
+                  <h6>max:{diplayLevel.level} °C</h6>
                 </div>
               </div>
-              <input
-                type="range" className="custom-range" min="15" max="37" 
-                onChange={(event) => setRangeval(event.target.value)}
-              />
+              <input className="custom-range" type="range" id="temperature"
+               onChange={(event) => { setRangeval(event.target.value); setRange()}}
+               name="cowbell" min="15" max="37" value={diplayLevel.level}/>
             </div>
           </div>
           <div className="datas">

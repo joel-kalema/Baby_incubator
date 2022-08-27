@@ -78,7 +78,6 @@ function Login() {
     if(isSubmitted === true) {
       if(name === "docteur") {
         navigate("./doctor", { replace: true });
-
       } else {
         navigate("./parent", { replace: true });
       }

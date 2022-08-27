@@ -1,4 +1,5 @@
 import './App.css';
+
 import { firebaseApp} from './firebaseData/database'
 import { getDatabase,ref, onValue, set} from 'firebase/database'
 import { useEffect, useState } from 'react';
@@ -69,6 +70,7 @@ function Docteur() {
     }
   }
 
+
   return (
     <div className="App">
       <main>
@@ -102,13 +104,12 @@ function Docteur() {
                 </div>
                 <div>
                   <p>{health.temperature}°C</p>
-                  <h6>max:{newRange.level} °C</h6>
+                  <h6>max:{diplayLevel.level} °C</h6>
                 </div>
               </div>
-              <input
-                type="range" className="custom-range" min="15" max="37" 
-                onChange={(event) => { setRangeval(event.target.value); setRange()}}
-              />
+              <input className="custom-range" type="range" id="temperature"
+               onChange={(event) => { setRangeval(event.target.value); setRange()}}
+               name="cowbell" min="15" max="37" value={diplayLevel.level}/>
             </div>
           </div>
           <div className="datas">

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import Docteur from "./main";
-import Parent from "./parent";
+import { useNavigate } from "react-router-dom";
 import './App.css';
 
 
@@ -8,7 +7,8 @@ function Login() {
   // React States
   const [errorMessages, setErrorMessages] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
-
+  const [name, setName] = useState('');
+  const [pass, setPass] = useState('');
   // User Login info
   const database = [
     {
@@ -31,7 +31,6 @@ function Login() {
     event.preventDefault();
 
     var { uname, pass } = document.forms[0];
-
     // Find user login info
     const userData = database.find((user) => user.username === uname.value);
 
@@ -62,10 +61,10 @@ function Login() {
       <form onSubmit={handleSubmit}>
       <h1>Connect</h1>
           <label>Username </label>
-          <input type="text" name="uname" required />
+          <input type="text" name="uname" required onChange={(e)=> setName(e.target.value)}/>
           {renderErrorMessage("uname")}
           <label>Key</label>
-          <input type="password" name="pass" required />
+          <input type="password" name="pass" required onChange={(e)=> setPass(e.target.value)}/>
           {renderErrorMessage("pass")}
         <div className="button-container">
           <input type="submit" />
@@ -73,13 +72,15 @@ function Login() {
       </form>
     </div>
   );
-
+  
+  let navigate = useNavigate();
   const condition = () => {
     if(isSubmitted === true) {
-      if(database[0].username === "docteur") {
-        return (<Docteur />)
+      if(name === "docteur") {
+        navigate("./doctor", { replace: true });
+
       } else {
-        return (<Parent />)
+        navigate("./parent", { replace: true });
       }
       
     }
@@ -93,10 +94,6 @@ function Login() {
     <div className="app">
       <div className="login-form">
         {condition()}
-
-        {/* { isSubmitted && database[0].username === "docteur" ? <Docteur />
-         :isSubmitted && database[1].username === "parent" ? <Parent />
-         :renderForm } */}
       </div>
     </div>
   );

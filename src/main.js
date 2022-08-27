@@ -1,6 +1,6 @@
 import './App.css';
-import { firebaseApp } from './firebaseData/database'
-import { getDatabase,ref, onValue} from 'firebase/database'
+import { firebaseApp} from './firebaseData/database'
+import { getDatabase,ref, onValue, set} from 'firebase/database'
 import { useEffect, useState } from 'react';
 import { FaTemperatureLow, FaHeartbeat, FaBalanceScaleLeft } from 'react-icons/fa';
 import { GiHamburgerMenu } from 'react-icons/gi';
@@ -9,7 +9,12 @@ import { WiHumidity } from 'react-icons/wi';
 
 function Docteur() {
   const [health, sethealth] = useState([])
+  const [newRange, setNewRange] = useState({})
   const [rangeval, setRangeval] = useState('00');
+  const [showAlHeart, setShowAlarmHeart] = useState(false);
+  const [showAlTemp, setShowAlarmTemp] = useState(false);
+  const [alarmTemp, setAlarmTemp] = useState('')
+  const [alarmHeart, setAlarmHeart] = useState('')
 
   const App = firebaseApp
   const db = getDatabase(App)
@@ -18,30 +23,51 @@ function Docteur() {
     onValue(ref(db), snapshot => {
       const data = snapshot.val();
       if (data !== null) {
-        Object.values(data).map((hth) => {
-          sethealth(health => [...health, hth])
-        })
+        sethealth(Object.values(data)[1])
+        setNewRange(Object.values(data)[0])
       }
     })
+    
   }, [])
 
-
-    // const [key, setKey] = useState();
+  useEffect(() => {
+   if(health){
+    showAlarmHeart(health)
+   showAlarmTemp(health)
+   }
     
-  // const db = getFirestore(firebaseApp)
-  // const colRef = collection(db, 'health')
+  }, [health])
 
-  // getDocs(colRef)
-  // .then((snapshot) => {
-  //   console.log(snapshot.docs)
-  //   let login = []
-  //   snapshot.docs.map((log) => {
-  //      setKey(login.push(log.data()))
-  //   })
-  //   console.log(login)
-  // }).catch(error => {
-  //   console.log(error)
-  // })
+  const setRange = () => {
+    set(ref(db, 'doctorSet', 'level'), {
+      level: rangeval,
+    });
+  }
+
+  const showAlarmTemp = (health) => {
+     if(parseInt(health.temperature) >= 30){
+       setAlarmTemp("Temperature Overload")
+       setShowAlarmHeart(true);
+     }else if(parseInt(health.temperature) <= 20){
+      setAlarmTemp("Temperature UnderLimit")
+      setShowAlarmHeart(true);
+    }else{
+      setShowAlarmHeart(false);
+    }
+
+  }
+
+  const showAlarmHeart = (health) => {
+    if(parseInt(health.heartPulse) <= 40){
+      setAlarmHeart("HeartPulse UnderLimit")
+      setShowAlarmTemp(true);
+    }else if(parseInt(health.heartPulse) >= 100){
+      setAlarmHeart("HeartPulse is too fast")
+      setShowAlarmTemp(true);
+    }else{
+      setShowAlarmTemp(false);
+    }
+  }
 
   return (
     <div className="App">
@@ -49,6 +75,10 @@ function Docteur() {
       <section className="home_page">
         <header>
           <h3>Logo</h3>
+              <div class="alarm-message">
+                {showAlHeart? (<p>{alarmHeart}</p>):''}
+                {showAlTemp? (<p>{alarmTemp}</p>):''}
+              </div>
           <nav>
           <GiHamburgerMenu />
           </nav>
@@ -56,7 +86,7 @@ function Docteur() {
         <div className="descriptions">
           <h1 className="title">Baby incubator</h1>
           <div className="page_description">
-            <p>An incubator is designed to provide a safe</p>
+            <p>An incubator is designed to provide a safe environment</p>
           </div>
         </div>
       </section>
@@ -71,12 +101,13 @@ function Docteur() {
                   <FaTemperatureLow />
                 </div>
                 <div>
-                {health.slice(-1).map(ht => <p>{ht}°C/</p>)}<h6>max:{rangeval} °C</h6>
+                  <p>{health.temperature}°C</p>
+                  <h6>max:{newRange.level} °C</h6>
                 </div>
               </div>
               <input
                 type="range" className="custom-range" min="15" max="37" 
-                onChange={(event) => setRangeval(event.target.value)}
+                onChange={(event) => { setRangeval(event.target.value); setRange()}}
               />
             </div>
           </div>
@@ -87,7 +118,7 @@ function Docteur() {
                 <FaHeartbeat />
               </div>
               <div>
-              {health.slice(0, 1).map(ht => <p>{ht}</p>)}
+              <p>{health.heartPulse}</p>
               </div>
             </div>
           </div>
@@ -98,7 +129,7 @@ function Docteur() {
                 <FaBalanceScaleLeft />
               </div>
               <div>
-              {health.slice(1, 2).map(ht => <p>{ht}kg</p>)}
+              <p>{health.height}/kg</p>
               </div>
             </div>
           </div>
@@ -109,7 +140,7 @@ function Docteur() {
                 <WiHumidity />
               </div>
               <div>
-              {health.slice(-2, -1).map(ht => <p>{ht}%</p>)}
+                <p>{health.humidity}</p>
               <span>/50%</span>
               </div>
             </div>

@@ -20,6 +20,8 @@ function Parent() {
         })
       }
     })
+
+    console.log(health)
   }, [])
 
 
@@ -68,7 +70,7 @@ function Parent() {
                   <i className="fa fa-thermometer-empty" aria-hidden="true"></i>
                 </div>
                 <div>
-                {health.slice(-1).map(ht => <p>{ht}°C/</p>)}
+                  <p>{health.slice(-1)[0]}°C</p>
                 </div>
               </div>
             </div>
@@ -80,18 +82,18 @@ function Parent() {
                 <i className="fa fa-heartbeat" aria-hidden="true"></i>
               </div>
               <div>
-              {health.slice(0, 1).map(ht => <p>{ht}</p>)}
+                <p>{}</p>
               </div>
             </div>
           </div>
           <div className="datas">
-            <h3>Height</h3>
+            <h3>Weight</h3>
             <div className="data_content">
               <div className="icon weight">
                 <i className="fa fa-tachometer" aria-hidden="true"></i>
               </div>
               <div>
-              {health.slice(1, 2).map(ht => <p>{ht}kg</p>)}
+                {/* <p>{health[]}kg</p> */}
               </div>
             </div>
           </div>
@@ -102,7 +104,7 @@ function Parent() {
                 <i className="fa fa-tint" aria-hidden="true"></i>
               </div>
               <div>
-              {health.slice(-2, -1).map(ht => <p>{ht}%</p>)}
+              {/* {health.slice(-2, -1).map(ht => <p>{ht}%</p>)} */}
               <span>/50%</span>
               </div>
             </div>

@@ -4,11 +4,14 @@ import { firebaseApp} from './firebaseData/database'
 import { getDatabase,ref, onValue, set} from 'firebase/database'
 import { useEffect, useState } from 'react';
 import { FaTemperatureLow, FaHeartbeat, FaBalanceScaleLeft } from 'react-icons/fa';
-import { GiHamburgerMenu } from 'react-icons/gi';
+import { AiOutlineLogout } from 'react-icons/ai';
 import { WiHumidity } from 'react-icons/wi';
+import { Link } from 'react-router-dom';
+import { GiBabyFace } from 'react-icons/gi';
 
 
 function Docteur() {
+
   const [health, sethealth] = useState([])
   const [newRange, setNewRange] = useState({})
   const [rangeval, setRangeval] = useState('00');
@@ -70,19 +73,18 @@ function Docteur() {
     }
   }
 
-
   return (
     <div className="App">
       <main>
       <section className="home_page">
         <header>
-          <h3>Logo</h3>
+          <h1><GiBabyFace /></h1>
               <div class="alarm-message">
                 {showAlHeart? (<p>{alarmHeart}</p>):''}
                 {showAlTemp? (<p>{alarmTemp}</p>):''}
               </div>
           <nav>
-          <GiHamburgerMenu />
+          <Link to='/'><AiOutlineLogout /></Link>
           </nav>
         </header>
         <div className="descriptions">
@@ -93,7 +95,7 @@ function Docteur() {
         </div>
       </section>
       <section className="datas_container">
-        <h2>My baby</h2>
+        <h2>The baby</h2>
         <div>
           <div className="datas">
             <div>
@@ -104,12 +106,12 @@ function Docteur() {
                 </div>
                 <div>
                   <p>{health.temperature}°C</p>
-                  <h6>max:{diplayLevel.level} °C</h6>
+                  <h6>max:{newRange.level} °C</h6>
                 </div>
               </div>
               <input className="custom-range" type="range" id="temperature"
                onChange={(event) => { setRangeval(event.target.value); setRange()}}
-               name="cowbell" min="15" max="37" value={diplayLevel.level}/>
+               name="cowbell" min="15" max="37" value={newRange.level}/>
             </div>
           </div>
           <div className="datas">
@@ -142,7 +144,7 @@ function Docteur() {
               </div>
               <div>
                 <p>{health.humidity}</p>
-              <span>/50%</span>
+              <span>(%)</span>
               </div>
             </div>
           </div>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { CgProfile } from 'react-icons/cg';
 import './App.css';
 
 
@@ -59,6 +60,9 @@ function Login() {
   const renderForm = (
     <div className="form">
       <form onSubmit={handleSubmit}>
+      <div className="icon">
+        <CgProfile />
+      </div>
       <h1>Connect</h1>
           <label>Username </label>
           <input type="text" name="uname" required onChange={(e)=> setName(e.target.value)}/>

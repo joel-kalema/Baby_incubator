@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+
 .App {
   text-align: center;
 }
@@ -6,8 +8,6 @@
   height: 40vmin;
   pointer-events: none;
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
 
 * {
   padding: 0;
@@ -23,11 +23,21 @@ html {
 header {
   position: fixed;
   display: flex;
+  align-items: center;
   justify-content: space-between;
   width: 100%;
   background-color: #fff;
   box-shadow: 0 0 18px rgba(0, 0, 0, 0.274);
-  padding: 10px 15px;
+  padding: 1rem 2rem;
+}
+
+header h1 {
+  font-size: 40px;
+}
+
+header a {
+  text-decoration: none;
+  color: red;
 }
 
 nav {
@@ -67,6 +77,7 @@ nav {
 
 .datas_container {
   padding: 20px;
+  margin: 0 auto;
 }
 
 .datas_container h2 {
@@ -141,6 +152,10 @@ form input {
   border-radius: 20px;
 }
 
+form .icon{
+  font-size: 40px;
+}
+
 form label {
   font-size: 13px;
 }
@@ -153,5 +168,31 @@ form .button-container input {
   border-radius: 20px;
   background: rgb(71, 71, 255);
   padding: 10px 20px;
+}
+
+.alarm-message p {
+  font-size: 12px;
+  background-color: red;
+  color: #fff;
+  padding: 5px 10px;
+  margin: 5px 0;
+}
+
+@media only screen and (min-width: 820px) {
+  header {
+    padding: 1rem 4rem;
+  }
+
+  .datas_container {
+    padding: 20px;
+    max-width: 70%;
+    margin: 0 auto;
+  }
+
+  .page_description {
+    max-width: 40%;
+    margin: 2rem auto;
+  }
+
 }
 

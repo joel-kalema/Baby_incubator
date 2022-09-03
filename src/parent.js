@@ -39,11 +39,12 @@ function Parent() {
       
     }, [health])
   
+    
     const showAlarmTemp = (health) => {
-       if(parseInt(health.temperature) >= 30){
+       if(parseInt(health.temperature) >= newRange.level){
          setAlarmTemp("Temperature Overload")
          setShowAlarmHeart(true);
-       }else if(parseInt(health.temperature) <= 20){
+       }else if(parseInt(health.temperature) <= newRange.level){
         setAlarmTemp("Temperature UnderLimit")
         setShowAlarmHeart(true);
       }else{

@@ -64,8 +64,8 @@ nav {
   text-align: center;
   margin-top: 1rem;
   padding: 15px 10px;
-  background-color: rgb(0, 197, 0);
-  color: #fff;
+  /* background-color: rgb(0, 197, 0);
+  color: #fff; */
   border-radius: 1rem;
   -webkit-border-radius: 1rem;
   -moz-border-radius: 1rem;
@@ -176,6 +176,55 @@ form .button-container input {
   color: #fff;
   padding: 5px 10px;
   margin: 5px 0;
+}
+
+.store-charts-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.entity-list-wrapper {
+  flex: 0 0 100%;
+  margin-top: 30px;
+}
+
+.main_contrainer-page {
+  width: 100%;
+  display: flex;
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+.item-progress-bar-container {
+  display: flex;
+  margin-left: 5%;
+  margin-top: 15px;
+  position: fixed;
+  width: 90%;
+  top: 55px;
+  z-index: 8;
+  background-color: #80808078;
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.item-step {
+  align-items: center;
+  background-color: #ffffffa5;
+  cursor: pointer;
+  display: flex;
+  font-size: 12px;
+  height: 12px;
+  justify-content: center;
+  -webkit-transform: skew(-30deg);
+  transform: skew(-30deg);
+}
+
+.active-step {
+  background-color: #046168e0;
+  color: #e7e7e7e0;
 }
 
 @media only screen and (min-width: 820px) {

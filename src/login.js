@@ -13,8 +13,8 @@ function Login() {
   // User Login info
   const database = [
     {
-      username: "docteur",
-      password: "pass1"
+      username: "user",
+      password: "123456"
     },
     {
       username: "parent",
@@ -80,12 +80,7 @@ function Login() {
   let navigate = useNavigate();
   const condition = () => {
     if(isSubmitted === true) {
-      if(name === "docteur") {
-        navigate("./doctor", { replace: true });
-      } else {
-        navigate("./parent", { replace: true });
-      }
-      
+      navigate("./doctor", { replace: true });
     }
     else{
       console.log(isSubmitted)

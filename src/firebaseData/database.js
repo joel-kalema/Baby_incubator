@@ -1,11 +1,11 @@
 import { initializeApp } from 'firebase/app';
 
 export const firebaseApp = initializeApp({
-    apiKey: "AIzaSyD-s6tdjiEsAY8_9vsSR5b0C8SCp8sP-Dg",
-    authDomain: "incubator-792ad.firebaseapp.com",
-    databaseURL: "https://incubator-792ad-default-rtdb.firebaseio.com",
-    projectId: "incubator-792ad",
-    storageBucket: "incubator-792ad.appspot.com",
-    messagingSenderId: "544622898492",
-    appId: "1:544622898492:web:cb3ab1c97360065f6d8239"
-  });
+  apiKey: "AIzaSyDGkakF48EA0kBazxvNnh2nU_1nLrPNLJg",
+  authDomain: "vitals-sign-device.firebaseapp.com",
+  databaseURL: "https://vitals-sign-device-default-rtdb.firebaseio.com",
+  projectId: "vitals-sign-device",
+  storageBucket: "vitals-sign-device.appspot.com",
+  messagingSenderId: "461608055180",
+  appId: "1:461608055180:web:e55dcb74575127219826a9"
+});

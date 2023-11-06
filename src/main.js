@@ -1,7 +1,6 @@
 import './App.css';
-
-import { firebaseApp } from './firebaseData/database'
-import { getDatabase, ref, onValue, set } from 'firebase/database'
+import { firebaseApp} from './firebaseData/database'
+import { getDatabase,ref, onValue, set} from 'firebase/database'
 import { useEffect, useState } from 'react';
 import { FaTemperatureLow, FaHeartbeat, FaBalanceScaleLeft } from 'react-icons/fa';
 import { AiOutlineLogout } from 'react-icons/ai';
@@ -10,81 +9,39 @@ import { Link } from 'react-router-dom';
 import { GiBabyFace } from 'react-icons/gi';
 
 
-function Docteur() {
-
-  const [health, sethealth] = useState([])
-  const [newRange, setNewRange] = useState({})
-  const [rangeval, setRangeval] = useState('00');
-  const [showAlHeart, setShowAlarmHeart] = useState(false);
-  const [showAlTemp, setShowAlarmTemp] = useState(false);
-  const [alarmTemp, setAlarmTemp] = useState('')
-  const [alarmHeart, setAlarmHeart] = useState('')
-
-  const App = firebaseApp
-  const db = getDatabase(App)
-
-  useEffect(() => {
-    onValue(ref(db), snapshot => {
-      const data = snapshot.val();
-      if (data !== null) {
-        sethealth(Object.values(data)[1])
-        setNewRange(Object.values(data)[0])
-      }
-    })
-
-  }, [])
-
-  useEffect(() => {
-    if (health) {
-      showAlarmHeart(health)
-      showAlarmTemp(health)
-    }
-
-  }, [health])
-
-  const setRange = () => {
-    set(ref(db, 'doctorSet', 'level'), {
-      level: rangeval,
-    });
-  }
-
-  const showAlarmTemp = (health) => {
-    if (parseInt(health.temperature) >= newRange.level) {
-      setAlarmTemp("Temperature Overload")
-      setShowAlarmHeart(true);
-    } else if (parseInt(health.temperature) <= newRange.level) {
-      setAlarmTemp("Temperature UnderLimit")
-      setShowAlarmHeart(true);
-    } else {
-      setShowAlarmHeart(false);
-    }
-
-  }
-
-  const showAlarmHeart = (health) => {
-    if (parseInt(health.heartPulse) <= 40) {
-      setAlarmHeart("HeartPulse UnderLimit")
-      setShowAlarmTemp(true);
-    } else if (parseInt(health.heartPulse) >= 100) {
-      setAlarmHeart("HeartPulse is too fast")
-      setShowAlarmTemp(true);
-    } else {
-      setShowAlarmTemp(false);
-    }
-  }
-
-  return (
-    <div className="App">
-      <main>
+function Parent() {
+    const [health, sethealth] = useState([])
+    const [newRange, setNewRange] = useState({})
+    const [showAlHeart, setShowAlarmHeart] = useState(false);
+    const [showAlTemp, setShowAlarmTemp] = useState(false);
+    const [alarmTemp, setAlarmTemp] = useState('')
+    const [alarmHeart, setAlarmHeart] = useState('')
+  
+    const App = firebaseApp
+    const db = getDatabase(App)
+  
+    useEffect(() => {
+      onValue(ref(db), snapshot => {
+        const data = snapshot.val();
+        if (data !== null) {
+          sethealth(data.UsersData.WcTxhOkt0lYeRZz8fAltHneTQ4d2.currentData)
+        }
+      })
+      
+    }, [])
+   
+    return (
+      <div className="App">
+        <main>
         <section className="home_page">
           <header>
-            <h1><GiBabyFace /></h1>
-            <div class="alarm-message">
-              {showAlHeart ? (<p>{alarmHeart}</p>) : ''}
-              {showAlTemp ? (<p>{alarmTemp}</p>) : ''}
-            </div>
+          <h1><GiBabyFace /></h1>
+                {/* <div class="alarm-message">
+                  {showAlHeart? (<p>{alarmHeart}</p>):''}
+                  {showAlTemp? (<p>{alarmTemp}</p>):''}
+                </div> */}
             <nav>
-              <Link to='/'><AiOutlineLogout /></Link>
+            <Link to='/'><AiOutlineLogout /></Link>
             </nav>
           </header>
           <div className="descriptions">
@@ -95,61 +52,48 @@ function Docteur() {
           </div>
         </section>
         <section className="datas_container">
-          <h2>My datas</h2>
+          <h2>My Datas</h2>
           <div>
             <div className="datas">
               <div>
-                <h4>Temperature</h4>
+                <h3>Temperature</h3>
                 <div className="data_content">
                   <div className="icon temperature">
                     <FaTemperatureLow />
                   </div>
                   <div>
-                    <p>{health.temperature ? health.temperature : "00"}°C</p>
-                    <h6>max:{newRange.level} °C</h6>
+                    <p>{health.temperature}°C</p>
                   </div>
                 </div>
               </div>
             </div>
             <div className="datas">
-              <h4>Heart</h4>
+              <h3>Heart</h3>
               <div className="data_content">
                 <div className="icon heart">
                   <FaHeartbeat />
                 </div>
                 <div>
-                  <p>{health.heartPulse ? health.heartPulse : "00"}</p>
+                <p>{health.heartRate}</p>
                 </div>
               </div>
             </div>
             <div className="datas">
-              <h4>Oxygene</h4>
+              <h3>Oxygen</h3>
               <div className="data_content">
-                <div className="icon weight">
-                  <FaBalanceScaleLeft />
+                <div className="icon humidity">
+                  <WiHumidity />
                 </div>
                 <div>
-                  <p>{health.height ? health.height : "00"}/kg</p>
+                  <p>{health.oxygen}</p>
+                <span>(%)</span>
                 </div>
               </div>
             </div>
-            {/* <div className="datas">
-            <h3>Humidity</h3>
-            <div className="data_content">
-              <div className="icon humidity">
-                <WiHumidity />
-              </div>
-              <div>
-                <p>{health.humidity}</p>
-              <span>(%)</span>
-              </div>
-            </div>
-          </div> */}
           </div>
         </section>
       </main>
-    </div>
-  );
-}
-
-export default Docteur;
+      </div>
+    );
+  }
+export default Parent;
